@@ -1,4 +1,7 @@
 <html>
+  <meta charset="UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <body>
     <style>
       #outgoing {
@@ -21,6 +24,7 @@
     
     
 }
+
     </style>
     <form>
       <textarea id="incoming"></textarea>
@@ -34,14 +38,19 @@
 
       <button id="close">close</button>
 
-      <a class="button" href="./index.html#1" >start Offer</a>
+<div style="margin-top: 1rem;">
+  <a class="button" href="./index.html#1" >start Offer</a>
 
-      <a class="button" href="./index.html">get Offer</a>
+  <a class="button" href="./index.html">get Offer</a>
+</div>
+
+  
 
       <ul id="messages"></ul>
 
 
-    <pre id="outgoing"></pre>
+      <pre id="outgoing" style="max-width: 90vw;"></pre>
+
     <script src="simplepeer.min.js"></script>
     <script>
       const p = new SimplePeer({
