@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "simple-peer": "^9.11.1"
+    "blob-to-buffer": "^1.2.9",
+    "buffer": "^6.0.3",
+    "simple-peer": "^9.11.1",
+    "uniq": "^1.0.1"
   }
 }

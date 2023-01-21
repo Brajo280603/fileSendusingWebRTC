@@ -26,19 +26,31 @@
 }
 
     </style>
-    <form>
+    <form style="margin-left: 1rem;">
       <textarea id="incoming"></textarea>
       <button type="submit">submit</button>
 
     </form>
 
       <div id="connectionOk" style="display: none; height: 1rem;width: 4rem; position: fixed;background-color:green;top:0;right: 0; padding: 1rem;color: white;">connected</div>
-      <input id="msg" type="text">
-      <button id="send">send</button>
+    <div id="databox" style="display: none;">
+      <div style="margin: 1rem;">
+        <input type="file" id="fileinput" />
+        <button id="sendFile" >send File</button>
+      </div>
+      <div style="margin: 1rem;">
+        <input id="msg" type="text">
+        <button id="send">send</button>
+      </div>
 
-      <button id="close">close</button>
+      <a class="button" id="downloader" style="display: none;" download>download</a>
 
-<div style="margin-top: 1rem;">
+      
+
+      <button id="close" style="margin-left: 1rem;">close</button>
+    </div>
+
+<div style="margin-top: 1rem; margin-left: 1rem;">
   <a class="button" href="./index.html#1" >start Offer</a>
 
   <a class="button" href="./index.html">get Offer</a>
@@ -46,61 +58,12 @@
 
   
 
-      <ul id="messages"></ul>
+      <ul id="messages" style="margin-left: 1rem;"></ul>
 
 
-      <pre id="outgoing" style="max-width: 90vw;"></pre>
+      <pre id="outgoing" style="max-width: 90vw; margin-left: 1rem;"></pre>
 
-    <script src="simplepeer.min.js"></script>
-    <script>
-      const p = new SimplePeer({
-        initiator: location.hash === '#1',
-        trickle: false
-      })
 
-      p.on('error', err => console.log('error', err))
-
-      p.on('signal', data => {
-        console.log('SIGNAL', JSON.stringify(data))
-        document.querySelector('#outgoing').style.display="block";
-        document.querySelector('#outgoing').textContent = JSON.stringify(data)
-      })
-
-      document.querySelector('form').addEventListener('submit', ev => {
-        ev.preventDefault()
-        p.signal(JSON.parse(document.querySelector('#incoming').value))
-        document.querySelector('form').style.display="none";
-      })
-
-      p.on('connect', () => {
-        console.log('CONNECT');
-        document.getElementById('connectionOk').style.display = 'block';
-        document.querySelector('#outgoing').style.display="none";
-      })
-
-      p.on('data', data => {
-        console.log('data: ' + data)
-        let messages = document.getElementById("messages");
-        let item = document.createElement('li');
-			    item.textContent = data;
-          item.className = "their-msg";
-			    messages.appendChild(item);
-			    window.scrollTo(0,document.body.scrollHeight);
-
-      })
-
-    
-      document.querySelector('#send').addEventListener('click',()=>{
-        // console.log(document.querySelector('#msg').value)
-
-        p.send(document.querySelector('#msg').value)
-      })
-
-      document.querySelector('#close').addEventListener('click', ()=>{
-        console.log('you closed the connection');
-        p.send('peer closed the connection');
-        p.destroy();
-      })
-    </script>
+    <script src="bundle.js"></script>
   </body>
 </html>
