@@ -1,0 +1,63 @@
+<html>
+  <body>
+    <style>
+      #outgoing {
+        width: 600px;
+        word-wrap: break-word;
+        white-space: normal;
+      }
+    </style>
+    <form>
+      <textarea id="incoming"></textarea>
+      <button type="submit">submit</button>
+
+    </form>
+      <input id="msg" type="text">
+      <button id="send">send</button>
+
+      <button id="close">close</button>
+    <pre id="outgoing"></pre>
+    <script src="/node_modules/simple-peer/simplepeer.min.js"></script>
+    <script>
+      const p = new SimplePeer({
+        initiator: location.hash === '#1',
+        trickle: false
+      })
+
+      p.on('error', err => console.log('error', err))
+
+      p.on('signal', data => {
+        console.log('SIGNAL', JSON.stringify(data))
+        document.querySelector('#outgoing').textContent = JSON.stringify(data)
+      })
+
+      document.querySelector('form').addEventListener('submit', ev => {
+        ev.preventDefault()
+        p.signal(JSON.parse(document.querySelector('#incoming').value))
+        document.querySelector('form').style.display="none";
+      })
+
+      p.on('connect', () => {
+        console.log('CONNECT')
+ 
+      })
+
+      p.on('data', data => {
+        console.log('data: ' + data)
+      })
+
+    
+      document.querySelector('#send').addEventListener('click',()=>{
+        // console.log(document.querySelector('#msg').value)
+        p.send('whatever' + Math.random())
+        p.send(document.querySelector('#msg').value)
+      })
+
+      document.querySelector('#close').addEventListener('click', ()=>{
+        console.log('you closed the connection');
+        p.send('peer closed the connection');
+        p.destroy();
+      })
+    </script>
+  </body>
+</html>
