@@ -2818,10 +2818,11 @@ document.getElementById("sendFile").addEventListener('click',()=> {
 
 
 // check compatibility
+let qr = document.getElementById("barcodecheck")
 if (!("BarcodeDetector" in window)) {
-  alert("Barcode Detector is not supported by this browser.");
+  qr.textContent = "Barcode Detector is not supported by this browser.";
 } else {
-  alert("Barcode Detector supported!");
+  qr.textContent = "Barcode Detector supported!";
 
   // create new detector
   const barcodeDetector = new BarcodeDetector({
