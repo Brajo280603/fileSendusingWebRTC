@@ -2815,6 +2815,19 @@ document.getElementById("sendFile").addEventListener('click',()=> {
   // }
 });
 
+
+
+// check compatibility
+if (!("BarcodeDetector" in window)) {
+  console.log("Barcode Detector is not supported by this browser.");
+} else {
+  console.log("Barcode Detector supported!");
+
+  // create new detector
+  const barcodeDetector = new BarcodeDetector({
+    formats: ["code_39", "codabar", "ean_13"],
+  });
+}
 },{"blob-to-buffer":9,"buffer/":10,"simple-peer":36}],8:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
 },{"dup":1}],9:[function(require,module,exports){
