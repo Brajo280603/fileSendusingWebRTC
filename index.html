@@ -6,16 +6,41 @@
         word-wrap: break-word;
         white-space: normal;
       }
+      .button {
+    
+    background: lightgrey;
+    border:1px solid gray;
+    padding: 0.2rem;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+    text-decoration: none;
+
+    font-family: monospace;
+
+    
+    
+}
     </style>
     <form>
       <textarea id="incoming"></textarea>
       <button type="submit">submit</button>
 
     </form>
+
+      <div id="connectionOk" style="display: none; height: 1rem;width: 4rem; position: fixed;background-color:green;top:0;right: 0; padding: 1rem;color: white;">connected</div>
       <input id="msg" type="text">
       <button id="send">send</button>
 
       <button id="close">close</button>
+
+      <a class="button" href="./index.html#1" >start Offer</a>
+
+      <a class="button" href="./index.html">get Offer</a>
+
+      <ul id="messages"></ul>
+
+
     <pre id="outgoing"></pre>
     <script src="simplepeer.min.js"></script>
     <script>
@@ -28,6 +53,7 @@
 
       p.on('signal', data => {
         console.log('SIGNAL', JSON.stringify(data))
+        document.querySelector('#outgoing').style.display="block";
         document.querySelector('#outgoing').textContent = JSON.stringify(data)
       })
 
@@ -38,18 +64,26 @@
       })
 
       p.on('connect', () => {
-        console.log('CONNECT')
- 
+        console.log('CONNECT');
+        document.getElementById('connectionOk').style.display = 'block';
+        document.querySelector('#outgoing').style.display="none";
       })
 
       p.on('data', data => {
         console.log('data: ' + data)
+        let messages = document.getElementById("messages");
+        let item = document.createElement('li');
+			    item.textContent = data;
+          item.className = "their-msg";
+			    messages.appendChild(item);
+			    window.scrollTo(0,document.body.scrollHeight);
+
       })
 
     
       document.querySelector('#send').addEventListener('click',()=>{
         // console.log(document.querySelector('#msg').value)
-        p.send('whatever' + Math.random())
+
         p.send(document.querySelector('#msg').value)
       })
 
